@@ -32,5 +32,4 @@ object PubEx2 extends App with LazyLogging {
   finally {
     sys.terminate()
   }
-  sys.terminate()
 }
