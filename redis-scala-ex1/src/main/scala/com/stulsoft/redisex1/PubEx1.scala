@@ -22,12 +22,13 @@ object PubEx1 extends App with LazyLogging {
   val client = RedisClient(AppConfig.host, AppConfig.port)
 
   client.publish("ystest", """{"a":"aaaa","b":123}""")
-    .onComplete {
-      case Success(l) =>
-        logger.info(s"Result = $l")
-        sys.terminate()
-      case Failure(ex) =>
-        logger.error(s"Failure: ${ex.getMessage}")
-        sys.terminate()
-    }
+    .onComplete(res => {
+      res match {
+        case Success(l) =>
+          logger.info(s"Result = $l")
+        case Failure(ex) =>
+          logger.error(s"Failure: ${ex.getMessage}")
+      }
+      sys.terminate()
+    })
 }
